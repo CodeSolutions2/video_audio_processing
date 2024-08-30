@@ -283,71 +283,25 @@ async function modify_existing_audio_and_or_video_from_file() {
 	// --------------------------
 	
 	if (modification_type == 'Obtain a video frame at a specific time') {
-		
-		// Video to image
-		const url_video0 = await fetch_file(base64_string_video0, file_name_video0, "video/webm");
-		console.log('url_video0: ', url_video0);
-    
-		const videoElement = await load_video_from_url(url_video0, mode="nocors");
-    
-		await transform_video_to_image(videoElement);
-		
+		document.getElementById('notification').innerHTML = "In progress.";
+
 	} else if (modification_type == 'Append two audio files') {
-		
-		const url_audio0 = await fetch_file(base64_string_audio0, file_name_audio0, "video/webm");
-		console.log('url_audio0: ', url_audio0);
-		const audioElement0 = await load_audio_from_url(url_audio0, mode="nocors");
+		document.getElementById('notification').innerHTML = "In progress.";
 
-		const url_audio1 = await fetch_file(base64_string_audio1, file_name_audio1, "video/webm");
-		console.log('url_audio1: ', url_audio1);
-		const audioElement1 = await load_audio_from_url(url_audio1, mode="nocors");
-    
-		var appended_normalArray_normalized = await append_two_audio_tracks(base64_string_audio0, base64_string_audio1);
-
-		// I know how to play an audio from: 
-		// 0) file (base64string, fetch on the base64string to get a blob object, Make a url for the blob object. Give url to audioElement.src.), 
-		// 1) url (give url to audioElement.src), 
-		// 2) blob_object via event mediastream (get event.data, which is a blob object. Make a url for the blob object. Give url to audioElement.src.). Sometimes blob_objects fail due to security issues.
-		
-		// Download the audio array and then play it
-		var download_url = URL.createObjectURL(blob_object);
-		await download_audio_recording(download_url);
-
-		// is it possible to create a URL for an array, such that the url can be used to download tha array as an mp3 file? please give an example No, it is not possible to create a URL for an array that can be used to download it as an mp3 file.
-		
 	} else if (modification_type == 'Combine an audio and video file') {
-
-		const url_audio0 = await fetch_file(base64_string_audio0, file_name_audio0, "video/webm");
-		console.log('url_audio0: ', url_audio0);
-		const audioElement = await load_audio_from_url(url_audio0, mode="nocors");
-
-		const url_video0 = await fetch_file(base64_string_video0, file_name_video0, "video/webm");
-		console.log('url_video0: ', url_video0);
-		const videoElement = await load_video_from_url(url_video0, mode="nocors");
-    
-		await combine_audio_video(videoElement, audioElement);
+		document.getElementById('notification').innerHTML = "In progress.";
 
 	} else if (modification_type == 'Append two video files') {
-
-		const url_video0 = await fetch_file(base64_string_video0, file_name_video0, "video/webm");
-		console.log('url_video0: ', url_video0);
-		const videoElement0 = await load_video_from_url(url_video0, mode="nocors");
-
-		const url_video1 = await fetch_file(base64_string_video1, file_name_video1, "video/webm");
-		console.log('url_video1: ', url_video1);
-		const videoElement1 = await load_video_from_url(url_video1, mode="nocors");
-
-		// Can stream a video to an empty video source
+		document.getElementById('notification').innerHTML = "In progress.";
 
 	} else if (modification_type == 'Play an audio from file') {
-		
-		const url_audio0 = await fetch_file(base64_string_audio0, file_name_audio0, "audio/mp3");
-		console.log('url_audio0: ', url_audio0);
-		const audioElement0 = await load_audio_from_url(url_audio0, mode="nocors");
+		document.getElementById('notification').innerHTML = "In progress.";
 		
 	} else {
 		document.getElementById('notification').innerHTML = "Please select an audio and/or video modification type."; 
 	}
+
+	// --------------------------
 
 }
 
