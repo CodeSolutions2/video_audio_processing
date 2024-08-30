@@ -367,17 +367,37 @@ async function modify_existing_audio_and_or_video_from_file() {
 // -------------------------------------------------
 async function transform_video_to_image(videoElement) {
 
+
+	// Get metadata (duration, height, width)
+	console.log('videoElement: ', videoElement);
+	
+	
 	// Print video frame on a canvas
-	var w = 224;
-	const ctx = await create_dynamic_canvasElement(w);
+	// var w = 224;
+	// const ctx = await create_dynamic_canvasElement(w);
 	
 	// This should plot the video frame on the canvas
-	ctx.drawImage(videoElement, 0, 0, w, w);
+	// ctx.drawImage(videoElement, 0, 0, w, w);
+
+	// -----------------------------------------------
+
+	// Used function event to obtain an image frame of the video
+	// videoElement.onseeked = function(e) { } 
+	// -----------------------------------------------
+
+	await way0_plot_video_to_image(ctx);
+	await way1_plot_video_to_image(ctx);
+	
+
+}
+
+
+async function way0_plot_video_to_image(ctx) {
 
 	// Get the image data plotted on the canvas
 	var imageData_OR_videoframe = ctx.getImageData(0, 0, w, w);
-	// console.log('imageData_OR_videoframe: ', imageData_OR_videoframe);
-
+	console.log('imageData_OR_videoframe: ', imageData_OR_videoframe);
+	
 	// -----------------------------------------------
 	
 	// Create a 4D array from the imageData_OR_videoframe
@@ -407,8 +427,6 @@ async function transform_video_to_image(videoElement) {
 	const fourD_array_tensorflowjs = tf.tensor4d(data, [1, 4, 4, 4]);
 	console.log('fourD_array_tensorflowjs: ', fourD_array_tensorflowjs);
 	
-	// -----------------------------------------------
-	
 	// Print modified video frame on a canvas
 	const ctx_mod = await create_dynamic_canvasElement(w);
 
@@ -428,10 +446,18 @@ async function transform_video_to_image(videoElement) {
 	
 	// Draw the image data onto the canvas
 	ctx_mod.putImageData(imageData, 0, 0);
+}
 
-	// OR
+
+async function way1_plot_video_to_image(ctx) {
+
+	// Get the image data plotted on the canvas
+	var imageData_OR_videoframe = ctx.getImageData(0, 0, w, w);
+	console.log('imageData_OR_videoframe: ', imageData_OR_videoframe);
+
+	// -----------------------------------------------
 	
-	// Way 1: take the image directly from canvas ctx
+	// Take the image directly from canvas ctx
 	var len = imageData_OR_videoframe.data.length/4;
 	for (var i=0; i<len; i++) {
 		var r = imageData_OR_videoframe.data[i*4+0];	// Red component
@@ -445,7 +471,6 @@ async function transform_video_to_image(videoElement) {
 	
 	// Draw the image data onto the canvas
 	ctx_mod.putImageData(imageData_OR_videoframe, 0, 0);
-
 }
 
 // -------------------------------------------------
